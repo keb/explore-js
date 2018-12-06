@@ -99,4 +99,68 @@ module.exports = () => {
     console.log( megaman.hello() );
 
     // Functional Inheritance
+    // Functional inheritance makes use of a factory function and then tacks on new properties using concatentative inheritance
+    // Functions created for the purpose of extending existing objects are `functional mixins`
+    // The advantage of using functions for extension is that it allows you to use the closure to encapsulate private data
+
+    const spacedog = {
+        loadOnSpaceShip(cargo) {
+            console.log('This has been loaded on the space ship: ', cargo);
+        }
+    };
+
+    // The only way to access `attrs` is through the privileged methods
+    // These are methods defined within the closure!
+    const rawMixin = () => {
+        const attrs = {};
+
+        return Object.assign(this, {
+            set(name, val) {
+                attrs[name] = val;
+                this.loadOnSpaceShip({ name, val });
+            },
+
+            get(name) {
+                return attrs[name];
+            }
+        }, spacedog)
+    };
+
+    // Here, we use the mixinModel wrapper because we need to set `this` inside the function rawMixin
+    // We do this with Function.prototype.call
+    const mixinModel = target => rawMixin.call(target);
+
+    const georgeDog = { name: 'george' };
+    const model = mixinModel(georgeDog);
+
+    model.set('resource', 'spacedog food');
+
+    console.log(georgeDog);
+
+    // Composition Over Class Inheritance
+    // Classical Inheritance creates `is-a` relationships with restrictive taxonomies
+    // Composition allows us `has-a` `uses-a` or `can-do` relationships
+
+    /**
+     * A `stamp` is a composable factory function that returns object instances based on its descripter
+     * stamp(options?: Object, ...args?: [...Any]) => instance: Object
+     * 
+     * Stamps have a method called `.compose()`
+     * Stamp.compose(...args?: [...Composable]) => Stamp
+     * 
+     * When called, the compose method creates a new stamp using the current stamp as a base, composed with a list of composables
+     * const combinedStamp = baseStamp.compose(composable1, composable2, composable3);
+     * 
+     * A composable is a stamp or a POJO stamp descriptor.
+     * 
+     * The `compose` method doubles as a stamp's descriptor.
+     * Descriptor properties are attached to the stamp `compose` method, e.g. `stamp.compose.methods`
+     * 
+     * Composable descriptor (or just descriptor) is a meta data object which contains info necessary to create an object instance
+     * A descriptor contains:
+     *  - methods - aset of methods that will be added to object's delegate prototype
+     *  - properties - a set of properties that will be added to new object instances by assignment
+     *  - initializers - an array of functions that will run in sequence. stamp details & arguments get passed to initializers
+     *  - staticProperties - a set of static properties that will be copied by assignment to the stamp
+     */
 };

@@ -2,6 +2,7 @@ module.exports = () => {
     let animal = { eats: true };
     let dog = { barks: true };
 
+    // typically, you don't want to do this. you should use Object.create instead
     dog.__proto__ = animal;
 
     console.log(dog.__proto__ == animal); // true

@@ -15,5 +15,11 @@
 // require('./objects_new_constructor')();
 // require('./objects_class_patterns')();
 // require('./objects_class_syntax')();
-require ('./objects_prototypical_inheritance')();
+// require ('./objects_prototypical_inheritance')();
+// require('./objects_delegation_simpson')();
+// require('./scoping')();
 // require('./maps_sets_forof')();
+// require('./async_await')();
+// require('./set')();
+// require('./fetch')();
+// require('./generators')();

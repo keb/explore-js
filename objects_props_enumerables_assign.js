@@ -21,6 +21,13 @@ module.exports = () => {
     // So you might want to use .hasOwnProperty
     console.log('user.hasOwnProperty("toString")?', user.hasOwnProperty('toString'));
 
+    // Enumerable properties are those properties whose internal enumerable flag is set to true,
+    // which is the default for properties created via simple assignment or via a property initializer
+    // (properties defined via Object.defineProperty and such default enumerable to false).
+    // Enumerable properties show up in for...in loops unless the property's key is a Symbol.
+    // Ownership of properties is determined by whether the property belongs to the object
+    // directly and not to its prototype chain.
+
     // Lets define an un-enumerable property on user
     Object.defineProperty(user, 'p2', {
         enumerable: false,

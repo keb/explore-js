@@ -32,3 +32,30 @@ const findGaps = ranges => {
 
 let gaps = findGaps(ranges);
 console.log(gaps);
+
+/**
+ * Merge ranges
+ */
+
+let raw_data = ['2018-01-01:2018-01-05', '2018-01-03:2018-01-10', '2017-04-23:2017-06-11'];
+let mergeThese = raw_data.map(s => [...s.split(':')]);
+
+const mergeRanges = ranges => {
+    if (ranges.length < 2) return ranges;
+
+    const startDates = ranges.map(r => r[0]);
+    const endDates   = ranges.map(r => r[1]);
+
+    const earliest = startDates.reduce((prev, cur) => {
+        return new Date(prev).getTime() < new Date(cur).getTime() ? prev : cur;
+    });
+
+    const latest = endDates.reduce((prev, cur) => {
+        return new Date(prev).getTime() > new Date(cur).getTime() ? prev: cur;
+    });
+
+    return [earliest, latest];
+};
+
+const merged = mergeRanges(mergeThese);
+console.log(merged);

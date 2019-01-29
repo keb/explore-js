@@ -429,3 +429,302 @@ The first `==` tries to coerce the values before comparing them. It is then gene
 
 Because the second is a strict type comparison. typeof false is 'bool', where typeof '0' is 'string'
 
+### What is the output out of the following code? Explain your answer.
+
+```
+var a={},
+    b={key:'b'},
+    c={key:'c'};
+
+a[b]=123;
+a[c]=456;
+
+console.log(a[b]);
+```
+
+The output will be: `456`
+
+Because when you use an object as a dynamic key, it is automatically converted to a string, which in both cases would be '[object Object]'
+
+### What will the following code output to the console:
+
+```
+console.log(
+    (function f(n){
+        return ((n > 1) ? n * f(n-1) : n)
+    })(10)
+);
+```
+
+The output will be the 10 factorial:
+```
+10 * 9 * 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1 = 3628800
+```
+
+### Consider the code snippet below. What will the console output be and why?
+
+```
+(function(x) {
+    return (function(y) {
+        console.log(x);
+    })(2)
+})(1);
+```
+
+The output will be:
+```
+1
+```
+
+Because of the closure. When `console.log` is called, `x` in still within its lexical scope.
+
+### What will the following code output to the console and why? What is the issue with this code and how can it be fixed.
+
+```
+var hero = {
+    _name: 'John Doe',
+    getSecretIdentity: function (){
+        return this._name;
+    }
+};
+
+var stoleSecretIdentity = hero.getSecretIdentity;
+
+console.log(stoleSecretIdentity());
+console.log(hero.getSecretIdentity());
+```
+
+So this will putput the following:
+```
+undefined
+John Doe
+```
+
+The reason being that when`stoleSecretIdentity` references `hero.getSecretIdentity`, it does not carry the same `this` context. Instead, the function is being invoked in the global context (the window object which does not contain a _name property). In order to use the same context, you must bind it to the `hero` object.
+
+So do this instead: `var stoleSecretIdentity = hero.getSecretIdentity.bind(hero);` then call it regularly like this `stoleSecretIdentity()`
+
+Or you can call it using `.call` or `.apply` like this:
+`stoleSecretIdentity.call(hero)` or `stoleSecretIdentity.apply(hero)`
+
+### Create a function that, given a DOM Element on the page, will visit the element itself and all of its descendents (not just its immediate children). For each element visited, the function should pass that element to a provided callback function. The arguments to the function should be: a DOM element, a callback function (that takes a DOM element as its argument)
+
+Visiting all elements in a tree (DOM) is a classic Depth-First-Search algorithm application. Here’s an example solution:
+
+```
+function Traverse(el, fn) {
+    fn(el);
+    const list = el.children;
+    for (let i = 0; i < list.length; i++) {
+        Traverse(list[i], fn); // recurse
+    }
+}
+```
+
+### Testing your this knowledge in JavaScript: What is the output of the following code?
+
+```
+var length = 10;
+function fn() {
+	console.log(this.length);
+}
+
+var obj = {
+  length: 5,
+  method: function(fn) {
+    fn();
+    arguments[0]();
+  }
+};
+
+obj.method(fn, 1);
+```
+
+This will ouput:
+```
+10 // This will reference the global object because of where fn is defined
+2  // When fn is called as an element of the `arguments` array (which arrays are objects and carry .length properties), it logs the length of the `arguments` array, which after being passed both 'fn, 1', is equal to 2.
+```
+
+### Consider the following code. What will the output be, and why?
+
+```
+(function () {
+    try {
+        throw new Error();
+    } catch (x) {
+        var x = 1, y = 2;
+        console.log(x);
+    }
+    console.log(x);
+    console.log(y);
+})();
+```
+
+The output will be:
+```
+1
+undefined
+2
+```
+var statements are hoisted (without their value initialization) to the top of the global or function scope it belongs to, even when it’s inside a with or catch block. However, the error’s identifier is only visible inside the catch block. It is equivalent to:
+
+```
+(function () {
+    var x, y; // outer and hoisted
+    try {
+        throw new Error();
+    } catch (x /* inner */) {
+        x = 1; // inner x, not the outer one
+        y = 2; // there is only one y, which is in the outer scope
+        console.log(x /* inner */);
+    }
+    console.log(x); // outer
+    console.log(y); // outer
+})();
+```
+
+### What will be the output of this code?
+
+```
+var x = 21;
+var girl = function () {
+    console.log(x);
+    var x = 20;
+};
+girl ();
+```
+
+The output will be:
+```
+undefined
+```
+
+Neither 21, nor 20, the result is undefined
+
+It’s because JavaScript initialization is not hoisted.
+
+(Why doesn’t it show the global value of 21? The reason is that when the function is executed, it checks that there’s a local x variable present but doesn’t yet declare it, so it won’t look for global one.)
+
+This is equivalent to:
+```
+var x = 21;
+var girl = function () {
+    var x; // This x in this function scope is hoisted to the top
+    console.log(x);
+    x = 20;
+};
+girl ();
+```
+
+### How do you clone an object?
+
+```
+const a = {...existingObject};
+const a = Object.assign({}, existingObject);
+```
+
+The downfall of using these is that these are shallow copies, and that nested properties that are non-primitives remain as references, not full copies.
+
+### What will this code print?
+
+```
+for (let i = 0; i < 5; i++) {
+  setTimeout(function() { console.log(i); }, i * 1000 );
+}
+```
+
+This will print:
+```
+0
+1
+2
+3
+4
+```
+
+Thanks to the handy `let` operator which creates variables that are scoped within the for loop & block scoped.
+
+### What do the following lines output, and why?
+
+```
+console.log(1 < 2 < 3);
+console.log(3 > 2 > 1);
+```
+
+This will print:
+```
+true
+false
+```
+
+The first statement returns true which is as expected.
+
+The second returns false because of how the engine works regarding operator associativity for < and >. It compares left to right, so 3 > 2 > 1 JavaScript translates to true > 1. true has value 1, so it then compares 1 > 1, which is false.
+
+### How do you add an element at the begining of an array? How do you add one at the end?
+
+```
+arr.unshift(el);
+arr.push(el);
+```
+
+In ES6, you can also use the spread operator.
+
+### Imagine you have this code.
+```
+var a = [1,2,3];
+```
+
+Will this result in a crash? `a[10] = 999`
+What will this output? `console.log(a[6])`
+
+1. No, it won't result in a crash, just a bunch of `empty indexes`.
+2. `undefined`
+
+If you try to retrieve these slots, they return `undefined` however, they are not really filled with the `undefined` primitive.
+
+### What is the value of typeof undefined == typeof NULL?
+
+This will be `true` and evaluate to `'undefined' == 'undefined'`.
+JavaScript is case sensitive and NULL is different from `null` and just treated as a variable name.
+
+If you were to do `typeof undefined == typeof null` it would evaluate to `'undefined' == 'object'` which would be false.
+
+### What would following code return?
+```
+console.log(typeof typeof 1);
+```
+
+It would return `string` because typeof returns the type of a expression in string form.
+
+### What will the following code output and why?
+```
+var b = 1;
+function outer(){
+   	var b = 2
+    function inner(){
+        b++;
+        var b = 3;
+        console.log(b)
+    }
+    inner();
+}
+outer();
+```
+
+It will output:
+```
+b is NaN
+3
+```
+
+due to hoisting the code in inner will be interpreted as follows:
+```
+function inner () {
+    var b; // b is undefined
+    b++; // b is NaN
+    b = 3; // b is 3
+    console.log(b); // output "3"
+}
+```

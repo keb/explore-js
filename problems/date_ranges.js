@@ -59,3 +59,5 @@ const mergeRanges = ranges => {
 
 const merged = mergeRanges(mergeThese);
 console.log(merged);
+
+// should return ['2017-04-23:2017-06-11','2018-01-01:2018-01-10']

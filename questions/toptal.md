@@ -1,6 +1,6 @@
 https://www.toptal.com/javascript/interview-questions
 
-### What is a potential pitfall with using typeof bar === "object" to determine if bar is an object? How can this pitfall be avoided?
+## What is a potential pitfall with using typeof bar === "object" to determine if bar is an object? How can this pitfall be avoided?
 
 The problem here is that `null` is also considered an object. Therefore `typeof null === 'object'` logs `true`.
 This problem can be easily avoided by also check if bar is null.
@@ -20,7 +20,7 @@ Even better, this alternative returns false for nulls, arrays, functions, but tr
 
 `((bar !== null) && (bar.constructor === Object))`
 
-### What will the code below output to the console and why?
+## What will the code below output to the console and why?
 
 ```
 (function(){
@@ -48,7 +48,7 @@ b defined? true
 
 `b` ends up being a global variable, and is therefore still in the scope even outside of the enclosing function. In strict mode, this would generate an error because b is initialized before it is declared.
 
-### What will the code below output to the console and why?
+## What will the code below output to the console and why?
 
 ```
 var myObject = {
@@ -77,7 +77,7 @@ In the outer function, both this and self refer to `myObject` and therefore both
 
 In the inner function, `this` no longer refers to myObject. As a result, `this.foo` is undefined. whereas the reference ot the local variable `self` remains in scope via closure, and is accessible there.
 
-### What is the significance of, and reason for, wrapping the entire content of a JavaScript source file in a function block?
+## What is the significance of, and reason for, wrapping the entire content of a JavaScript source file in a function block?
 
 To prevent variable naming conflicts with the outer scope.
 
@@ -85,7 +85,7 @@ Some libraries do this in order to allow for an easily referencable alias for a 
 
 `(function($) { /* jQuery plugin code referencing $ */ } )(jQuery);`
 
-### What is the significance, and what are the benefits, of including 'use strict' at the beginning of a JavaScript source file?
+## What is the significance, and what are the benefits, of including 'use strict' at the beginning of a JavaScript source file?
 
 * `use strict` is a way to voluntarily enforce stricter parsing and error handling.
 
@@ -96,7 +96,7 @@ Some libraries do this in order to allow for an easily referencable alias for a 
 * Makes eval() safer.
 * Throws error on invalid usage of `delete`. The `delete` operator used to remove properties from objects cannot be used on non-configurable properties of an object. Non-strict code will fail silently when an attempt is made to do this.
 
-### Consider the two functions below. Will they both return the same thing? Why or why not?
+## Consider the two functions below. Will they both return the same thing? Why or why not?
 
 ```
 function foo1()
@@ -120,7 +120,7 @@ Not only that, but the second returns undefined without any error being thrown. 
 
 As a result, when the line containing the return statement is encountered in `foo2()`, a semicolon is automatically inserted immediately after the return statement. No error is thrown since the remainder of the code is perfectly valid, even though it doesn't ever get invoked or do anything.
 
-### What is NaN? What is its type? How can you reliably test if a value is equal to NaN?
+## What is NaN? What is its type? How can you reliably test if a value is equal to NaN?
 
 `NaN` means 'Not a Number'.
 However, `console.log(typeof NaN === 'number'); // logs true`
@@ -128,7 +128,7 @@ However, `console.log(typeof NaN === 'number'); // logs true`
 Additionally, `NaN` compared to anything, even itself, is false.
 A semi-reliable way to check whether a number is equal to `NaN` is using the built-in `isNan()`. ES6 introduced `Number.isNaN()` which is more reliable than the built in `isNaN()`.
 
-### What will the code below output? Explain your answer.
+## What will the code below output? Explain your answer.
 
 ```
 console.log(0.1 + 0.2);
@@ -148,7 +148,7 @@ A typical solution would be this. Note, `Number.EPSILON` represents the differen
 const areNumbersAlmostEqual(x, y) => Math.abs(x - y) < Number.EPSILON
 ```
 
-### Discuss possible ways to write a function isInteger(x) that determines if x is an integer.
+## Discuss possible ways to write a function isInteger(x) that determines if x is an integer.
 
 Here is one way:
 ```
@@ -168,7 +168,7 @@ The issue is that in ECMAScript, integers only exist conceptually; ALL numeric v
 const isInteger = x => x ^ 0 === x;
 ```
 
-### In what order will the numbers 1-4 be logged to the console when the code below is executed? Why?
+## In what order will the numbers 1-4 be logged to the console when the code below is executed? Why?
 
 ```
 (function() {
@@ -198,7 +198,7 @@ Similarly, setTimeout() also puts execution of its referenced function into the 
 
 When a value of zero is passed as the second argument to setTimeout(), it attempts to execute the specified function “as soon as possible”. Specifically, execution of the function is placed on the event queue to occur on the next timer tick. Note, though, that this is not immediate; the function is not executed until the next tick. That’s why in the above example, the call to console.log(4) occurs before the call to console.log(3) (since the call to console.log(3) is invoked via setTimeout, so it is slightly delayed).
 
-### Write a simple function (less than 160 characters) that returns a boolean indicating whether or not a string is a palindrome.
+## Write a simple function (less than 160 characters) that returns a boolean indicating whether or not a string is a palindrome.
 
 ```
 const isPalindrome = s => s === s.split('').reverse().join('');
@@ -212,7 +212,7 @@ function isPalindrome(str) {
 }
 ```
 
-### Write a sum method which will work properly when invoked using either syntax below.
+## Write a sum method which will work properly when invoked using either syntax below.
 
 ```
 console.log(sum(2,3));   // Outputs 5
@@ -237,9 +237,9 @@ function sum(...args) {
 }
 ```
 
-### Consider the following code snippet.
-### What gets logged to the console when the user clicks on "Button 4" and why?
-### Provide one or more alternate implementations that will work as expected.
+## Consider the following code snippet.
+## What gets logged to the console when the user clicks on "Button 4" and why?
+## Provide one or more alternate implementations that will work as expected.
 
 ```
 for (var i = 0; i < 5; i++) {
@@ -264,7 +264,7 @@ for (let i = 0; i < 5; i++) {
 }
 ```
 
-### Assuming d is an “empty” object in scope, say: `var d = {};`. What is accomplished by using the following code?
+## Assuming d is an “empty” object in scope, say: `var d = {};`. What is accomplished by using the following code?
 
 ```
 [ 'zebra', 'horse' ].forEach(function(k) {
@@ -278,7 +278,7 @@ Ideally, any lookup performed on a JS object with an unset key evalutes to undef
 
 Passing an object to `Object.keys` will return an array with those set keys as well, even if their values are undefined.
 
-### What will the code below output to the console and why?
+## What will the code below output to the console and why?
 
 ```
 var arr1 = "john".split('');
@@ -294,7 +294,7 @@ array 2: length=5 last=j,o,n,e,s
 
 Because not only does `arr1.reverse()` alter the same array in memory, but it returns a reference to the same array (arr1). Therefore, from that line on, `arr1` and `arr2` reference the same Array in memory.
 
-### What will the code below output to the console and why ?
+## What will the code below output to the console and why ?
 
 ```
 console.log(1 +  "2" + "2");
@@ -316,7 +316,7 @@ NaN
 
 The fundamental issue here is that JavaScript (ECMAScript) is a loosely typed language and it performs automatic type conversion on values to accommodate the operation being performed. Let’s see how this plays out with each of the above examples.
 
-### The following recursive code will cause a stack overflow if the array list is too large. How can you fix this and still retain the recursive pattern?
+## The following recursive code will cause a stack overflow if the array list is too large. How can you fix this and still retain the recursive pattern?
 
 ```
 var list = readHugeList();
@@ -348,7 +348,7 @@ var nextListItem = function() {
 
 The stack overflow is eliminated because the event loop handles the recursion, not the call stack. When `nextListItem` runs, if `item` is not null, the timeout function (nextListItem) is pusehd to the event queue and the function exits, thereby leaving the call stack clear. When the event queue runs its timed-out event, the next item is processed and a timer is set to again invoke nextListItem.
 
-### What is a “closure” in JavaScript? Provide an example.
+## What is a “closure” in JavaScript? Provide an example.
 
 A closure is a function that retains the lexical context in which it was defined, regardless of when or where it is being called.
 
@@ -368,7 +368,7 @@ let foo = () => {
 foo();
 ```
 
-### What will be the output of the following code. Explain your answer. How could the use of closures help here?
+## What will be the output of the following code. Explain your answer. How could the use of closures help here?
 ```
 for (var i = 0; i < 5; i++) {
 	setTimeout(function() { console.log(i); }, i * 1000 );
@@ -393,7 +393,7 @@ for (var i = 0; i < 5; i++) {
 }
 ```
 
-### What would the following lines of code output to the console?
+## What would the following lines of code output to the console?
 
 ```
 console.log("0 || 1 = "+(0 || 1));
@@ -412,7 +412,7 @@ This returns:
 
 In JavaScript, both || and && are logical operators that return the first fully-determined “logical value” when evaluated from left to right.
 
-### What will be the output when the following code is executed? Explain.
+## What will be the output when the following code is executed? Explain.
 
 ```
 console.log(false == '0')
@@ -429,7 +429,7 @@ The first `==` tries to coerce the values before comparing them. It is then gene
 
 Because the second is a strict type comparison. typeof false is 'bool', where typeof '0' is 'string'
 
-### What is the output out of the following code? Explain your answer.
+## What is the output out of the following code? Explain your answer.
 
 ```
 var a={},
@@ -446,7 +446,7 @@ The output will be: `456`
 
 Because when you use an object as a dynamic key, it is automatically converted to a string, which in both cases would be '[object Object]'
 
-### What will the following code output to the console:
+## What will the following code output to the console:
 
 ```
 console.log(
@@ -461,7 +461,7 @@ The output will be the 10 factorial:
 10 * 9 * 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1 = 3628800
 ```
 
-### Consider the code snippet below. What will the console output be and why?
+## Consider the code snippet below. What will the console output be and why?
 
 ```
 (function(x) {
@@ -478,7 +478,7 @@ The output will be:
 
 Because of the closure. When `console.log` is called, `x` in still within its lexical scope.
 
-### What will the following code output to the console and why? What is the issue with this code and how can it be fixed.
+## What will the following code output to the console and why? What is the issue with this code and how can it be fixed.
 
 ```
 var hero = {
@@ -507,7 +507,7 @@ So do this instead: `var stoleSecretIdentity = hero.getSecretIdentity.bind(hero)
 Or you can call it using `.call` or `.apply` like this:
 `stoleSecretIdentity.call(hero)` or `stoleSecretIdentity.apply(hero)`
 
-### Create a function that, given a DOM Element on the page, will visit the element itself and all of its descendents (not just its immediate children). For each element visited, the function should pass that element to a provided callback function. The arguments to the function should be: a DOM element, a callback function (that takes a DOM element as its argument)
+## Create a function that, given a DOM Element on the page, will visit the element itself and all of its descendents (not just its immediate children). For each element visited, the function should pass that element to a provided callback function. The arguments to the function should be: a DOM element, a callback function (that takes a DOM element as its argument)
 
 Visiting all elements in a tree (DOM) is a classic Depth-First-Search algorithm application. Here’s an example solution:
 
@@ -521,7 +521,7 @@ function Traverse(el, fn) {
 }
 ```
 
-### Testing your this knowledge in JavaScript: What is the output of the following code?
+## Testing your this knowledge in JavaScript: What is the output of the following code?
 
 ```
 var length = 10;
@@ -546,7 +546,7 @@ This will ouput:
 2  // When fn is called as an element of the `arguments` array (which arrays are objects and carry .length properties), it logs the length of the `arguments` array, which after being passed both 'fn, 1', is equal to 2.
 ```
 
-### Consider the following code. What will the output be, and why?
+## Consider the following code. What will the output be, and why?
 
 ```
 (function () {
@@ -584,7 +584,7 @@ var statements are hoisted (without their value initialization) to the top of th
 })();
 ```
 
-### What will be the output of this code?
+## What will be the output of this code?
 
 ```
 var x = 21;
@@ -617,7 +617,7 @@ var girl = function () {
 girl ();
 ```
 
-### How do you clone an object?
+## How do you clone an object?
 
 ```
 const a = {...existingObject};
@@ -626,7 +626,7 @@ const a = Object.assign({}, existingObject);
 
 The downfall of using these is that these are shallow copies, and that nested properties that are non-primitives remain as references, not full copies.
 
-### What will this code print?
+## What will this code print?
 
 ```
 for (let i = 0; i < 5; i++) {
@@ -645,7 +645,7 @@ This will print:
 
 Thanks to the handy `let` operator which creates variables that are scoped within the for loop & block scoped.
 
-### What do the following lines output, and why?
+## What do the following lines output, and why?
 
 ```
 console.log(1 < 2 < 3);
@@ -662,7 +662,7 @@ The first statement returns true which is as expected.
 
 The second returns false because of how the engine works regarding operator associativity for < and >. It compares left to right, so 3 > 2 > 1 JavaScript translates to true > 1. true has value 1, so it then compares 1 > 1, which is false.
 
-### How do you add an element at the begining of an array? How do you add one at the end?
+## How do you add an element at the begining of an array? How do you add one at the end?
 
 ```
 arr.unshift(el);
@@ -671,7 +671,7 @@ arr.push(el);
 
 In ES6, you can also use the spread operator.
 
-### Imagine you have this code.
+## Imagine you have this code.
 ```
 var a = [1,2,3];
 ```
@@ -684,21 +684,21 @@ What will this output? `console.log(a[6])`
 
 If you try to retrieve these slots, they return `undefined` however, they are not really filled with the `undefined` primitive.
 
-### What is the value of typeof undefined == typeof NULL?
+## What is the value of typeof undefined == typeof NULL?
 
 This will be `true` and evaluate to `'undefined' == 'undefined'`.
 JavaScript is case sensitive and NULL is different from `null` and just treated as a variable name.
 
 If you were to do `typeof undefined == typeof null` it would evaluate to `'undefined' == 'object'` which would be false.
 
-### What would following code return?
+## What would following code return?
 ```
 console.log(typeof typeof 1);
 ```
 
 It would return `string` because typeof returns the type of a expression in string form.
 
-### What will the following code output and why?
+## What will the following code output and why?
 ```
 var b = 1;
 function outer(){

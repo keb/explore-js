@@ -41,23 +41,37 @@ let raw_data = ['2018-01-01:2018-01-05', '2018-01-03:2018-01-10', '2017-04-23:20
 let mergeThese = raw_data.map(s => [...s.split(':')]);
 
 const mergeRanges = ranges => {
-    if (ranges.length < 2) return ranges;
+    const lists = ranges.map(s => [...s.split(':')]);
 
-    const startDates = ranges.map(r => r[0]);
-    const endDates   = ranges.map(r => r[1]);
-
-    const earliest = startDates.reduce((prev, cur) => {
-        return new Date(prev).getTime() < new Date(cur).getTime() ? prev : cur;
+    const list = lists.sort((a, b) => {
+        return new Date(a[0]).getTime() > new Date(b[0]).getTime();
     });
 
-    const latest = endDates.reduce((prev, cur) => {
-        return new Date(prev).getTime() > new Date(cur).getTime() ? prev: cur;
-    });
+    const merged = [];
 
-    return [earliest, latest];
+    for (let i = 0; i < list.length; i++) {
+        if (!list[i]) continue;
+        if (!list[i + 1]) {
+            merged.push(list[i]);
+            continue;
+        }
+        
+        const tail = new Date(list[i][1]);
+        const head = new Date(list[i + 1][0]);
+
+        if (head.getTime() < tail.getTime()) {
+            // merge
+            merged.push([ list[i][0], list[i + 1][1] ]);
+            list[i + 1] = null;
+        } else {
+            merged.push(list[i]);
+        }
+    }
+
+    return merged.map(x => x.join(':'));
 };
 
-const merged = mergeRanges(mergeThese);
+const merged = mergeRanges(raw_data);
 console.log(merged);
 
 // should return ['2017-04-23:2017-06-11','2018-01-01:2018-01-10']

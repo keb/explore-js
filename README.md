@@ -1,1 +1,1 @@
-`git clone git@gitlab.com-keb:kebg/keb.now.sh.git`
+

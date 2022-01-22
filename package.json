@@ -18,6 +18,6 @@
   "author": "keb",
   "license": "MIT",
   "dependencies": {
-    "node-fetch": "^2.3.0"
+    "node-fetch": "^3.1.1"
   }
 }
